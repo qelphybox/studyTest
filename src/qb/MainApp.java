@@ -44,7 +44,7 @@ public class MainApp extends Application {
 		
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("testwindow/view/testWindow.fxml"));
+			loader.setLocation(MainApp.class.getResource("testwindow/view/TestWindow.fxml"));
 			AnchorPane testWindow = loader.load();
 			
 			rootLayout.setCenter(testWindow);
