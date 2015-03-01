@@ -2,7 +2,6 @@ package qb;
 
 import java.io.IOException;
 
-import qb.login.view.LogInWinController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import qb.login.controller.LogInWinController;
 
 public class MainApp extends Application {
 

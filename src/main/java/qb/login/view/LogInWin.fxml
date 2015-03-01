@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="150.0" maxWidth="300.0" minHeight="150.0" minWidth="300.0" prefHeight="150.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="qb.login.view.LogInWinController">
+<AnchorPane maxHeight="150.0" maxWidth="300.0" minHeight="150.0" minWidth="300.0" prefHeight="150.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="qb.login.controller.LogInWinController">
    <children>
       <GridPane layoutX="50.0" layoutY="35.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
         <columnConstraints>
@@ -26,8 +26,8 @@
       </GridPane>
       <HBox layoutX="58.0" layoutY="98.0">
          <children>
-            <Button layoutX="77.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleOk" prefWidth="80.0" text="Вход" />
-            <Button layoutX="189.0" layoutY="97.0" mnemonicParsing="false" text="Регистрация">
+            <Button layoutX="77.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleEnter" prefWidth="80.0" text="Вход" />
+            <Button layoutX="189.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleRegister" text="Регистрация">
                <HBox.margin>
                   <Insets left="20.0" />
                </HBox.margin>

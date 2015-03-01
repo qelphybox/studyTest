@@ -1,13 +1,18 @@
-package qb.login.view;
+package qb.login.controller;
 
-import org.controlsfx.dialog.Dialogs;
-
-import qb.login.model.LogPass;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import org.controlsfx.dialog.Dialogs;
+
+import qb.login.model.UserData;
+
+/**
+ * @author KBobykin
+ *
+ */
 public class LogInWinController {
 
 	private boolean isClosed = false;
@@ -19,7 +24,7 @@ public class LogInWinController {
 	private PasswordField passwordField;
 
 	private Stage dialogStage;
-	private LogPass logpass = new LogPass();
+	private UserData logpass = new UserData();
 	private boolean okClicked = false;
 
 	@FXML
@@ -30,7 +35,7 @@ public class LogInWinController {
 		this.dialogStage = dialogStage;
 	}
 	
-	public void setLogPass(LogPass logPass){
+	public void setLogPass(UserData logPass){
 		this.logpass = logPass;
 	}
 
@@ -39,7 +44,7 @@ public class LogInWinController {
 	}
 	
 	@FXML
-	private void handleOk() {
+	private void handleEnter() {
 
 		if (isInputValid()) {
 			logpass.setLogin(loginField.getText());
@@ -52,9 +57,18 @@ public class LogInWinController {
 		okClicked = true;
 		dialogStage.close();
 	}
-
+	
+	@FXML
+	private void handleRegister() {
+		
+		//TODO создать форму регистрации, дописать после
+		
+	}
+	
 	private boolean isInputValid() {
-
+		
+		//FIXME доработать валидацию, выбрасывает после нажатия на ОК в errorMessage.
+		
 		String errorMessage = "";
 		if (loginField.getText() == null || loginField.getText().length() == 0)
 			errorMessage += "Введите логин \n";
