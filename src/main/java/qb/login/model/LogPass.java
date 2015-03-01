@@ -1,8 +1,5 @@
 package qb.login.model;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 /**
  * Класс менеджер для логин/пароль пар
  * 
@@ -10,41 +7,40 @@ import javafx.beans.property.StringProperty;
  *
  */
 public class LogPass {
-	
-	private final StringProperty login;
-	private final StringProperty password;
-	
+
+	private String login;
+	private String password;
+
 	public LogPass() {
 		this(null, null);
 	}
 
 	public LogPass(String login, String password) {
-		this.login = new SimpleStringProperty(login);
-		this.password = new SimpleStringProperty(password);
+		this.login = login;
+		this.password = password;
 	}
-	
+
 	public String getLogin() {
-        return login.get();
-    }
+		return login;
+	}
 
-    public void setLogin(String login) {
-        this.login.set(login);
-    }
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
-    public StringProperty loginProperty() {
-        return login;
-    }
-    
-    public String getPassword() {
-    	return password.get();
-    }
-    
-    public void setPassword(String password) {
-        this.password.set(password);
-    }
+	public String loginProperty() {
+		return login;
+	}
 
-    public StringProperty passwordProperty() {
-        return password;
-    }
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String passwordProperty() {
+		return password;
+	}
 }
-
