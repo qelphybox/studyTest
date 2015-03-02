@@ -35,7 +35,7 @@ public class MainApp extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class
 					.getResource("testwindow/view/RootLayout.fxml"));
-			rootLayout = loader.load();
+			rootLayout = (BorderPane) loader.load();
 
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
@@ -51,7 +51,7 @@ public class MainApp extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class
 					.getResource("testwindow/view/TestWindow.fxml"));
-			AnchorPane testWindow = loader.load();
+			AnchorPane testWindow = (AnchorPane) loader.load();
 
 			rootLayout.setCenter(testWindow);
 		} catch (IOException e) {
@@ -65,7 +65,7 @@ public class MainApp extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class
 					.getResource("login/view/LogInWin.fxml"));
-			AnchorPane page = loader.load();
+			AnchorPane page = (AnchorPane) loader.load();
 
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Login");
