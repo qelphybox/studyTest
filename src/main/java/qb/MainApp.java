@@ -64,7 +64,7 @@ public class MainApp extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class
-					.getResource("login/view/LogInWin.fxml"));
+					.getResource("login/view/LogInView.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 
 			Stage dialogStage = new Stage();
@@ -96,6 +96,33 @@ public class MainApp extends Application {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public boolean showRegisterDialog() {
+		
+		try {
+			
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class
+					.getResource("login/view/RegistryView.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Login");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			
+			// TODO создать контроллер
+			
+//			LogInWinController controller = loader.getController();
+//			controller.setDialogStage(dialogStage);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return true;
 	}
 
 	public static void main(String[] args) {
