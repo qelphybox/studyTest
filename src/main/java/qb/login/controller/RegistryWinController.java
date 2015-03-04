@@ -3,6 +3,7 @@ package qb.login.controller;
 import org.controlsfx.dialog.Dialogs;
 
 import qb.login.model.UserData;
+import qb.utils.Validators;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -50,10 +51,15 @@ public class RegistryWinController {
 	@FXML
 	private void handleOk() {
 		
-		if (!passwordField1.getText().equals(passwordField2.getText()))
+		if (!passwordField1.getText().equals(passwordField2.getText()) && Validators.logPassValidator(passwordField1) && Validators.logPassValidator(passwordField2))
 			Dialogs.create().title("Ошибка").masthead("Ошибка ввода").message("Пароли не совпадают").showError();
 		else {
 			
+			if (Validators.logPassValidator(loginField)){
+				
+			}
+				
+				
 			//TODO сделать валидацию ввода полей, проверку на существование пользователя, запись в файл
 			
 		}

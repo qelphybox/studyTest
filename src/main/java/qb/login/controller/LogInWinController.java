@@ -58,7 +58,7 @@ public class LogInWinController {
 
 	@FXML
 	private void handleEnter() throws Exception {
-
+		
 		if (Validators.logPassValidator(loginField) && Validators.logPassValidator(passwordField)) {
 
 			logpass.setLogin(loginField.getText());
