@@ -16,19 +16,31 @@ import org.controlsfx.dialog.Dialogs;
  */
 public class Validators {
 
-	// TODO создать валидатор полей формы регистрации
-
-	// FIXME продумать, написать нормальный вариант валидации
-
 	/**
 	 * Валидатор для полей ввода имени и фамилии
 	 * 
 	 * @param nameField
 	 */
 	public static boolean nameValidator(TextField nameField) {
-		
+
+		String errMessage = rusInputValidator(nameField);
+
+		if (errMessage.length() == 0) {
+			return true;
+
+		} else {
+			if (nameField.getPromptText().contains("имя"))
+				errMessage = "Имя " + errMessage;
+				if (errMessage.length() > 15)
+					errMessage += "о";
+			if (nameField.getPromptText().contains("фамил"))
+				errMessage = "Фамилия " + errMessage; 
+				if (errMessage.length() > 15)
+					errMessage += "a";
+			Dialogs.create().title("Ошибка").masthead("Ошибка ввода")
+					.message(errMessage).showError();
+		}
 		return false;
-		
 	}
 
 	/**
@@ -65,12 +77,12 @@ public class Validators {
 	 * @return
 	 */
 	private static String rusInputValidator(TextField field) {
-		
+
 		Pattern validationPattern = Pattern.compile("^[а-яА-Я0-9_-]+$");
-		
+
 		String errorMessage = "";
-		
-		if (field.getText() != null || !field.getText().isEmpty()) {
+
+		if (field.getText() != null && !field.getText().isEmpty()) {
 			Matcher m = validationPattern.matcher(field.getText());
 			if (!m.matches())
 				errorMessage += "может содежать русские буквы, цифры, тире и нижнее подчеркивание\n";
@@ -79,7 +91,6 @@ public class Validators {
 		}
 		return errorMessage;
 	}
-
 
 	/**
 	 * Валидатор ввода на латинице
@@ -93,7 +104,24 @@ public class Validators {
 
 		String errorMessage = "";
 
-		if (field.getText() != null || !field.getText().isEmpty()) {
+		if (field.getText() != null && !field.getText().isEmpty()) {
+			Matcher m = validationPattern.matcher(field.getText());
+			if (!m.matches())
+				errorMessage += "должен содержать не менее 5 символов. Может содежать латинские буквы, цифры, тире и нижнее подчеркивание\n";
+		} else {
+			errorMessage += "не введен";
+		}
+
+		return errorMessage;
+	}
+	
+	private static String numInputValidator(TextField field) {
+
+		Pattern validationPattern = Pattern.compile("^[0-9]+$");
+
+		String errorMessage = "";
+
+		if (field.getText() != null && !field.getText().isEmpty()) {
 			Matcher m = validationPattern.matcher(field.getText());
 			if (!m.matches())
 				errorMessage += "должен содержать не менее 5 символов. Может содежать латинские буквы, цифры, тире и нижнее подчеркивание\n";

@@ -62,7 +62,7 @@ public class LogInWinController {
 		if (Validators.logPassValidator(loginField) && Validators.logPassValidator(passwordField)) {
 
 			logpass.setLogin(loginField.getText());
-			logpass.setPassword(passwordField.getText());
+			logpass.setPassword(passwordField.getText().hashCode());
 			
 		} else { 
 			
