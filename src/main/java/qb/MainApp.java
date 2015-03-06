@@ -12,12 +12,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import qb.login.controller.LogInWinController;
+import qb.login.controller.RegistryWinController;
 
 public class MainApp extends Application {
 
-	private Stage primaryStage;
+	private static Stage primaryStage;
 	private BorderPane rootLayout;
-	private boolean isDialogClosed = false;
+	private static boolean isDialogClosed = false;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -59,16 +60,16 @@ public class MainApp extends Application {
 		}
 	}
 
-	public boolean showLoginDialog() {
+	public static boolean showLoginDialog() {
 
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class
-					.getResource("login/view/LogInWin.fxml"));
+					.getResource("login/view/LogInView.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Login");
+			dialogStage.setTitle("Войти");
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
@@ -90,12 +91,43 @@ public class MainApp extends Application {
 			if (isDialogClosed)
 				primaryStage.close();
 
-			return controller.isOkClicked();
+			return controller.isEnterClicked();
 
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public static boolean showRegisterDialog() {
+
+		try {
+
+			FXMLLoader loader = new FXMLLoader();
+			Stage dialogStage = new Stage();
+
+			loader.setLocation(MainApp.class
+					.getResource("login/view/RegistryView.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			Scene scene = new Scene(page);
+
+			dialogStage.setTitle("Регистрация");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			dialogStage.setScene(scene);
+
+			// TODO создать контроллер
+
+			RegistryWinController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+
+			dialogStage.showAndWait();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return true;
 	}
 
 	public static void main(String[] args) {

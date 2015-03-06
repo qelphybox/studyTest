@@ -9,16 +9,16 @@ package qb.login.model;
 public class UserData {
 
 	private String login;
-	private String password;
+	private Integer password;
 	private String firstName;
-	private String secondName;
+	private String lastName;
 	private Long groupNum;
 
 	public UserData() {
 		this(null, null);
 	}
 
-	public UserData(String login, String password) {
+	public UserData(String login, Integer password) {
 		this.login = login;
 		this.password = password;
 	}
@@ -31,12 +31,12 @@ public class UserData {
 		this.firstName = firstName;
 	}
 
-	public String getSecondName() {
-		return secondName;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setSecondName(String secondName) {
-		this.secondName = secondName;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public Long getGroupNum() {
@@ -55,19 +55,11 @@ public class UserData {
 		this.login = login;
 	}
 
-	public String loginProperty() {
-		return login;
-	}
-
-	public String getPassword() {
+	public int getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(Integer password) {
 		this.password = password;
-	}
-
-	public String passwordProperty() {
-		return password;
 	}
 }
