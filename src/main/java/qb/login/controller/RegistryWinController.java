@@ -1,7 +1,9 @@
 package qb.login.controller;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -95,23 +97,36 @@ public class RegistryWinController {
 		else {
 
 			if (Validators.logPassValidator(loginField) && Validators.nameValidator(firstNameField) && Validators.nameValidator(lastNameField)) {
-				
+
 				userData.setFirstName(firstNameField.getText());
 				userData.setLastName(lastNameField.getText());
 				userData.setLogin(loginField.getText());
 				userData.setPassword(passwordField1.getText().hashCode());
 				userData.setGroupNum(new Long(groupNumField.getText()));
 				
-				//TODO сделать проверку на существование пользователя.
-				
-				//Записываем в файл. изи
 				Gson gson = new Gson();
 				String gsonstring = gson.toJson(userData);
 				File userDataFile = new File("userData.txt");
-				BufferedWriter output = new BufferedWriter(new FileWriter(userDataFile));
+
+				// TODO сделать проверку на существование пользователя.
+				
+				BufferedReader input = new BufferedReader(new FileReader(userDataFile));
+				while (input.readLine() != null){
+					String inLine = input.readLine();
+					UserData checkUsDat = gson.fromJson(gsonstring, UserData.class);
+					checkUsDat.getLogin();
+					//TODO закончить проверку
+				}
+				
+				// Записываем в файл. изи
+				
+				BufferedWriter output = new BufferedWriter(userDataFile.exists() ? new FileWriter(userDataFile, true) : new FileWriter(userDataFile));;
 				output.write(gsonstring);
+				output.newLine();
 				output.close();
-			} 
+				
+				dialogStage.close();
+			}
 
 			// TODO сделать валидацию ввода полей, проверку на существование
 			// пользователя, запись в файл

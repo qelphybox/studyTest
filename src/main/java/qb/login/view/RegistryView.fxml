@@ -6,7 +6,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="273.0" prefWidth="436.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="qb.login.controller.RegistryWinController">
    <children>
-      <GridPane layoutY="23.0" prefHeight="177.0" prefWidth="363.0" AnchorPane.topAnchor="23.0">
+      <GridPane layoutX="37.0" layoutY="25.0" prefHeight="177.0" prefWidth="363.0" AnchorPane.topAnchor="25.0">
         <columnConstraints>
           <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="123.0" />
           <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="240.0" />
@@ -34,7 +34,7 @@
             <TextField fx:id="groupNumField" prefHeight="25.0" prefWidth="227.0" promptText="Введите ваш номер группы..." GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
-      <Button layoutX="123.0" layoutY="218.0" mnemonicParsing="false" onAction="#handleOk" text="Зарегистрировать" />
+      <Button layoutX="95.0" layoutY="218.0" mnemonicParsing="false" onAction="#handleOk" text="Зарегистрировать" />
       <Button layoutX="255.0" layoutY="218.0" mnemonicParsing="false" onAction="#handleCancel" text="Отмена" />
    </children>
 </AnchorPane>
