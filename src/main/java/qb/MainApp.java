@@ -113,21 +113,21 @@ public class MainApp extends Application {
 			Scene scene = new Scene(page);
 
 			dialogStage.setTitle("Регистрация");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			dialogStage.initOwner(primaryStage);
 			dialogStage.setScene(scene);
-
-			// TODO создать контроллер
 
 			RegistryWinController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 
 			dialogStage.showAndWait();
-
+			
+			return controller.isRegClicked();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		return true;
 	}
 
 	public static void main(String[] args) {

@@ -15,7 +15,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import org.controlsfx.dialog.Dialogs;
+import org.sonatype.guice.bean.containers.Main;
 
+import qb.MainApp;
 import qb.login.model.UserData;
 import qb.utils.Validators;
 
@@ -28,7 +30,7 @@ import com.google.gson.Gson;
  *
  */
 public class RegistryWinController {
-
+	
 	@FXML
 	private TextField loginField;
 
@@ -61,11 +63,9 @@ public class RegistryWinController {
 					e.consume();
 				}
 				if (e.getCharacter().matches("[0-9.]")) {
-					if (txt_TextField.getText().contains(".")
-							&& e.getCharacter().matches("[.]")) {
+					if (txt_TextField.getText().contains(".") && e.getCharacter().matches("[.]")) {
 						e.consume();
-					} else if (txt_TextField.getText().length() == 0
-							&& e.getCharacter().matches("[.]")) {
+					} else if (txt_TextField.getText().length() == 0 && e.getCharacter().matches("[.]")) {
 						e.consume();
 					}
 				} else {
@@ -77,9 +77,9 @@ public class RegistryWinController {
 
 	private Stage dialogStage;
 	private UserData userData = new UserData();
-	private boolean okClicked = false;
 	private boolean regClicked = false;
-
+	private File userDataFile = new File("userData.txt");
+	
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
@@ -87,45 +87,64 @@ public class RegistryWinController {
 	public void setLogPass(UserData userData) {
 		this.userData = userData;
 	}
+	
+	public boolean isRegClicked() {
+		return regClicked;
+	}
 
+	@SuppressWarnings({ "deprecation", "resource" })
 	@FXML
-	private void handleOk() throws IOException {
-
+	private void handleOk() throws Exception {
+		
+		boolean canWrite = true;
+		
 		if (!passwordField1.getText().equals(passwordField2.getText()) && Validators.logPassValidator(passwordField1) && Validators.logPassValidator(passwordField2))
 			Dialogs.create().title("Ошибка").masthead("Ошибка ввода")
 					.message("Пароли не совпадают").showError();
 		else {
-
+			
 			if (Validators.logPassValidator(loginField) && Validators.nameValidator(firstNameField) && Validators.nameValidator(lastNameField)) {
-
-				userData.setFirstName(firstNameField.getText());
-				userData.setLastName(lastNameField.getText());
-				userData.setLogin(loginField.getText());
-				userData.setPassword(passwordField1.getText().hashCode());
-				userData.setGroupNum(new Long(groupNumField.getText()));
+				
+				String firstname = firstNameField.getText();
+				String lastName = lastNameField.getText();
+				String login = loginField.getText();
+				Integer password = passwordField1.getText().hashCode();
+				Long groupnum = new Long(groupNumField.getText());
+				
+				userData.setFirstName(firstname);
+				userData.setLastName(lastName);
+				userData.setLogin(login);
+				userData.setPassword(password);
+				userData.setGroupNum(groupnum);
 				
 				Gson gson = new Gson();
-				String gsonstring = gson.toJson(userData);
-				File userDataFile = new File("userData.txt");
-
-				// TODO сделать проверку на существование пользователя.
 				
+				// проверка на существование
 				BufferedReader input = new BufferedReader(new FileReader(userDataFile));
 				while (input.readLine() != null){
 					String inLine = input.readLine();
-					UserData checkUsDat = gson.fromJson(gsonstring, UserData.class);
-					checkUsDat.getLogin();
-					//TODO закончить проверку
+					UserData checkUserData = gson.fromJson(inLine, UserData.class);
+					if (checkUserData.getLogin().equals(userData.getLogin())) {
+						Dialogs.create().title("Ошибка").masthead("Ошибка регистрации").message("Пользователь с таким логином уже зарегистрирован").showError();
+						canWrite = false;
+						break;
+					}
 				}
 				
-				// Записываем в файл. изи
-				
-				BufferedWriter output = new BufferedWriter(userDataFile.exists() ? new FileWriter(userDataFile, true) : new FileWriter(userDataFile));;
-				output.write(gsonstring);
-				output.newLine();
-				output.close();
-				
-				dialogStage.close();
+				if (canWrite){
+					// Записываем в файл. изи
+					String gsonstring = gson.toJson(userData);
+					BufferedWriter output = new BufferedWriter(userDataFile.exists() ? new FileWriter(userDataFile, true) : new FileWriter(userDataFile));;
+					output.write(gsonstring);
+					output.newLine();
+					output.close();
+					dialogStage.close();
+					regClicked = true;
+				} else {
+					loginField.clear();
+					passwordField1.clear();
+					passwordField2.clear();
+				}
 			}
 
 			// TODO сделать валидацию ввода полей, проверку на существование

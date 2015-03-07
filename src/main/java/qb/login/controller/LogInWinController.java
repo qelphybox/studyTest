@@ -65,11 +65,10 @@ public class LogInWinController {
 			logpass.setPassword(passwordField.getText().hashCode());
 			
 		} else { 
-			
 			MainApp.showLoginDialog();
-			
 		}
-
+		
+		
 		// TODO доработать куда будет передаваться пара(логин, пароль);
 
 		enterClicked = true;
