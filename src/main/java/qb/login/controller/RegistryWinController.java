@@ -105,6 +105,7 @@ public class RegistryWinController {
 			
 			if (Validators.logPassValidator(loginField) && Validators.nameValidator(firstNameField) && Validators.nameValidator(lastNameField)) {
 				
+				//FIXME написать компактней
 				String firstname = firstNameField.getText();
 				String lastName = lastNameField.getText();
 				String login = loginField.getText();
@@ -125,7 +126,7 @@ public class RegistryWinController {
 					String inLine = input.readLine();
 					UserData checkUserData = gson.fromJson(inLine, UserData.class);
 					if (checkUserData.getLogin().equals(userData.getLogin())) {
-						Dialogs.create().title("Ошибка").masthead("Ошибка регистрации").message("Пользователь с таким логином уже зарегистрирован").showError();
+						Dialogs.create().title("Ошибка").masthead("Ошибка регистрации").message("Пользователь с логином \"" + login + "\" уже зарегистрирован").showError();
 						canWrite = false;
 						break;
 					}
