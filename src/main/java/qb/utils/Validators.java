@@ -14,6 +14,7 @@ import org.controlsfx.dialog.Dialogs;
  *         Валидаторы
  *
  */
+@SuppressWarnings("deprecation")
 public class Validators {
 
 	/**
@@ -78,14 +79,14 @@ public class Validators {
 	 */
 	private static String rusInputValidator(TextField field) {
 
-		Pattern validationPattern = Pattern.compile("^[а-яА-Я0-9_-]+$");
+		Pattern validationPattern = Pattern.compile("^[а-яА-Я]+$");
 
 		String errorMessage = "";
 
 		if (field.getText() != null && !field.getText().isEmpty()) {
 			Matcher m = validationPattern.matcher(field.getText());
 			if (!m.matches())
-				errorMessage += "может содежать русские буквы, цифры, тире и нижнее подчеркивание\n";
+				errorMessage += "может содежать только русские буквы\n";
 		} else {
 			errorMessage += "не введен";
 		}

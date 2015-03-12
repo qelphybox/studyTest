@@ -30,7 +30,7 @@ import com.google.gson.Gson;
  *
  */
 public class RegistryWinController {
-	
+
 	@FXML
 	private TextField loginField;
 
@@ -52,6 +52,9 @@ public class RegistryWinController {
 	public void initialize() {
 		// добавил эвент фильтр на поле группы
 		groupNumField.addEventFilter(KeyEvent.KEY_TYPED, numeric_Validation(5));
+		
+		//TODO добавить подобные эвент фильтры на ввод имени и фамилии
+		
 	}
 
 	// собственно эвент фильтр
@@ -78,8 +81,7 @@ public class RegistryWinController {
 	private Stage dialogStage;
 	private UserData userData = new UserData();
 	private boolean regClicked = false;
-	private File userDataFile = new File("userData.txt");
-	
+
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
@@ -87,55 +89,62 @@ public class RegistryWinController {
 	public void setLogPass(UserData userData) {
 		this.userData = userData;
 	}
-	
+
 	public boolean isRegClicked() {
 		return regClicked;
 	}
 
-	@SuppressWarnings({ "deprecation", "resource" })
+	@SuppressWarnings({ "deprecation", "resource", "null" })
 	@FXML
 	private void handleOk() throws Exception {
-		
+
 		boolean canWrite = true;
-		
+
 		if (!passwordField1.getText().equals(passwordField2.getText()) && Validators.logPassValidator(passwordField1) && Validators.logPassValidator(passwordField2))
-			Dialogs.create().title("Ошибка").masthead("Ошибка ввода")
-					.message("Пароли не совпадают").showError();
+			Dialogs.create().title("Ошибка").masthead("Ошибка ввода").message("Пароли не совпадают").showError();
 		else {
-			
+
 			if (Validators.logPassValidator(loginField) && Validators.nameValidator(firstNameField) && Validators.nameValidator(lastNameField)) {
-				
-				//FIXME написать компактней
+
+				// FIXME написать компактней
 				String firstname = firstNameField.getText();
 				String lastName = lastNameField.getText();
 				String login = loginField.getText();
 				Integer password = passwordField1.getText().hashCode();
 				Long groupnum = new Long(groupNumField.getText());
-				
+
 				userData.setFirstName(firstname);
 				userData.setLastName(lastName);
 				userData.setLogin(login);
 				userData.setPassword(password);
 				userData.setGroupNum(groupnum);
-				
+
 				Gson gson = new Gson();
+				File userDataFile = new File("userData.txt");
 				
 				// проверка на существование
-				BufferedReader input = new BufferedReader(new FileReader(userDataFile));
-				while (input.readLine() != null){
-					String inLine = input.readLine();
-					UserData checkUserData = gson.fromJson(inLine, UserData.class);
-					if (checkUserData.getLogin().equals(userData.getLogin())) {
-						Dialogs.create().title("Ошибка").masthead("Ошибка регистрации").message("Пользователь с логином \"" + login + "\" уже зарегистрирован").showError();
-						canWrite = false;
-						break;
-					}
+				if (userDataFile.exists()) {
+					BufferedReader input = new BufferedReader(new FileReader(userDataFile));
+					String inLine = new String();
+					do {
+						inLine = input.readLine();
+						if (inLine != null && !inLine.isEmpty()){
+							UserData checkUserData = gson.fromJson(inLine, UserData.class);
+							if (checkUserData == null)
+								checkUserData.setLogin("");
+							if (checkUserData.getLogin().equals(userData.getLogin())) {
+								Dialogs.create().title("Ошибка").masthead("Ошибка регистрации").message("Пользователь с логином \"" + login + "\" уже зарегистрирован").showError();
+								canWrite = false;
+								break;
+							}
+						}
+					} while (inLine != null && !inLine.isEmpty());
 				}
-				
-				if (canWrite){
+
+				if (canWrite) {
 					// Записываем в файл. изи
 					String gsonstring = gson.toJson(userData);
-					BufferedWriter output = new BufferedWriter(userDataFile.exists() ? new FileWriter(userDataFile, true) : new FileWriter(userDataFile));;
+					BufferedWriter output = new BufferedWriter(userDataFile.exists() ? new FileWriter(userDataFile, true) : new FileWriter(userDataFile));
 					output.write(gsonstring);
 					output.newLine();
 					output.close();
@@ -147,10 +156,6 @@ public class RegistryWinController {
 					passwordField2.clear();
 				}
 			}
-
-			// TODO сделать валидацию ввода полей, проверку на существование
-			// пользователя, запись в файл
-
 		}
 	}
 
