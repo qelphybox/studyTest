@@ -34,10 +34,8 @@ public class MainApp extends Application {
 	public void initRootLayout() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class
-					.getResource("testwindow/view/RootLayout.fxml"));
+			loader.setLocation(MainApp.class.getResource("testwindow/view/RootLayout.fxml"));
 			rootLayout = (BorderPane) loader.load();
-
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -50,8 +48,7 @@ public class MainApp extends Application {
 
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class
-					.getResource("testwindow/view/TestWindow.fxml"));
+			loader.setLocation(MainApp.class.getResource("testwindow/view/TestWindow.fxml"));
 			AnchorPane testWindow = (AnchorPane) loader.load();
 
 			rootLayout.setCenter(testWindow);
@@ -64,8 +61,7 @@ public class MainApp extends Application {
 
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class
-					.getResource("login/view/LogInView.fxml"));
+			loader.setLocation(MainApp.class.getResource("login/view/LogInView.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 
 			Stage dialogStage = new Stage();
@@ -106,8 +102,7 @@ public class MainApp extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			Stage dialogStage = new Stage();
 
-			loader.setLocation(MainApp.class
-					.getResource("login/view/RegistryView.fxml"));
+			loader.setLocation(MainApp.class.getResource("login/view/RegistryView.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 
 			Scene scene = new Scene(page);
@@ -121,9 +116,9 @@ public class MainApp extends Application {
 			controller.setDialogStage(dialogStage);
 
 			dialogStage.showAndWait();
-			
+
 			return controller.isRegClicked();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
