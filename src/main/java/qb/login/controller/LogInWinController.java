@@ -59,20 +59,23 @@ public class LogInWinController {
 	@FXML
 	private void handleEnter() throws Exception {
 		
+		String login = loginField.getText();
+		int password = passwordField.getText().hashCode();
 		if (Validators.logPassValidator(loginField) && Validators.logPassValidator(passwordField)) {
 
-			logpass.setLogin(loginField.getText());
-			logpass.setPassword(passwordField.getText().hashCode());
+			logpass.setLogin(login);
+			logpass.setPassword(password);
 			
 		} else { 
 			MainApp.showLoginDialog();
 		}
+		 
+		if(Validators.authenticate(login, password))
+			dialogStage.close();
 		
+		// TODO Сделать плюшки типа: зачистки полей при ошибке и передачу данных пользователя в систему
 		
-		// TODO доработать куда будет передаваться пара(логин, пароль);
-
 		enterClicked = true;
-		dialogStage.close();
 	}
 	
 	

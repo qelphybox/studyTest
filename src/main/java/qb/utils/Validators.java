@@ -1,5 +1,9 @@
 package qb.utils;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,6 +11,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import org.controlsfx.dialog.Dialogs;
+
+import com.google.gson.Gson;
+
+import qb.login.model.UserData;
 
 /**
  * @author KBobykin
@@ -16,7 +24,43 @@ import org.controlsfx.dialog.Dialogs;
  */
 @SuppressWarnings("deprecation")
 public class Validators {
-
+	
+	public static boolean authenticate(String login, int password) throws Exception{
+		
+		Gson gson = new Gson();
+		File userDataFile = new File("userData.txt");
+		
+		if (userDataFile.exists()) {
+			BufferedReader input = new BufferedReader(new FileReader(userDataFile));
+			String inLine = new String();
+			do {
+				inLine = input.readLine();
+				if (inLine != null && !inLine.isEmpty()){
+					UserData checkUserData = gson.fromJson(inLine, UserData.class);
+					if (checkUserData.getLogin().equals(login)){
+						if (checkUserData.getPassword() == password){
+							return true;
+						} else {
+							Dialogs.create().title("Ошибка").masthead("Неверный пароль").showError();
+							return false;
+						}
+					} else {
+						Dialogs.create().title("Ошибка").message("Пользователя с именем " + login + " не существует").showError();
+						return false;
+					}
+				} else {
+					Dialogs.create().title("Ошибка").message("Пользователя с именем " + login + " не существует").showError();
+					return false;
+				}
+				
+			} while (inLine != null && !inLine.isEmpty());
+		} else {
+			Dialogs.create().title("Ошибка").message("Пользователя с именем " + login + " не существует").showError();
+			return false;
+		}
+		
+	}
+	
 	/**
 	 * Валидатор для полей ввода имени и фамилии
 	 * 
